@@ -26,15 +26,10 @@ _WSHELL = win32com.client.Dispatch("Wscript.Shell")
 # see: https://docs.microsoft.com/en-us/windows/win32/shell/csidl
 
 
-def get_homedir() -> str:
-    """
-    Return home directory.
-
-    Note that we return CSIDL_PROFILE, not CSIDL_APPDATA,
-    CSIDL_LOCAL_APPDATA,  or CSIDL_COMMON_APPDATA.
-
-    :return str: path to the user home
-
+def get_homedir():
+    """Return home directory:
+    note that we return CSIDL_PROFILE, not
+    CSIDL_APPDATA, CSIDL_LOCAL_APPDATA,  or CSIDL_COMMON_APPDATA
     """
     return shell.SHGetFolderPath(0, shellcon.CSIDL_PROFILE, None, 0)
 
@@ -84,13 +79,12 @@ def create_shortcut(
         startmenu_path = str(
             Path(user_folders.startmenu) / (shortcut_instance.shortcut_name + scut_ext)
         )
-        _wscript_shortcut(startmenu_path, shortcut_instance)
-
+        _wscript_shortcut(startmenu_path, shortcut_instance, user_folders)
     if desktop:
         desktop_path = str(
             Path(user_folders.desktop) / (shortcut_instance.shortcut_name + scut_ext)
         )
-        _wscript_shortcut(desktop_path, shortcut_instance)
+        _wscript_shortcut(desktop_path, shortcut_instance, user_folders)
     return desktop_path, startmenu_path
 
 
